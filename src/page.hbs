@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>Devon Church</title>
+
+  <meta name="description" content="A portal for Devon Church, a developer in New Zealand working at Xero">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+</head>
+
+<body>
+
+  {{> ./icons.hbs}}
+
+  <div class="app__page">
+
+    <div class="app__center">
+
+      <main>
+
+        {{> @partial-block }}
+
+      </main>
+
+      <hr /> {{> ./footer.hbs}}
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

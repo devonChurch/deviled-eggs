@@ -1,0 +1,247 @@
+@import url("https://fonts.googleapis.com/css?family=Titillium+Web:300,700");
+
+:root {
+  --speed-500: 200ms;
+
+  --color-primary-500: #1cceba;
+  --color-secondary-500: #187176;
+  --color-tertiary-500: var(--color-primary-500);
+  --color-gray-100: #e6e6e6;
+  --color-gray-500: #4d4d4d;
+  --color-white: #fff;
+
+  --divider-weight: 0.5em;
+
+  --font-base: 16px;
+  --font-h1: 2em;
+  --font-weight-thin: 300;
+  --font-weight-bold: 700;
+
+  --radius--500: 0.15rem;
+
+  --space-100: 0.125em;
+  --space-200: 0.25em;
+  --space-300: 0.5em;
+  --space-400: 0.75em;
+  --space-500: 1em;
+  --space-800: 2em;
+}
+
+@media (min-width: 500px) {
+  :root {
+    --font-base: 18px;
+    --font-h1: 3em;
+  }
+}
+
+@media (min-width: 700px) {
+  :root {
+    --font-base: 20px;
+    --font-h1: 4em;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --font-base: 22px;
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  transition: var(--speed-500);
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-primary-500);
+  color: var(--color-gray-500);
+  font-family: "Titillium Web", sans-serif;
+  font-size: var(--font-base);
+  font-weight: var(--font-weight-thin);
+  margin: 0;
+  padding: var(--space-500);
+}
+
+strong {
+  color: var(--color-primary-500);
+  font-weight: var(--font-weight-bold);
+}
+
+h1 {
+  font-size: var(--font-h1);
+  font-weight: var(--font-weight-thin);
+  margin: calc(var(--space-200) * -1) 0 var(--space-200) -0.05em;
+}
+
+a {
+  background-color: transparent;
+  color: var(--color-secondary-500);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-tertiary-500);
+}
+
+a:hover svg {
+  background: var(--color-tertiary-500);
+}
+
+svg {
+  fill: var(--color-white);
+}
+
+hr {
+  border: 0;
+  border-top: var(--divider-weight) solid var(--color-gray-100);
+  box-sizing: content-box;
+  height: 0;
+  margin: var(--space-800) 0;
+  overflow: visible;
+  width: var(--space-800);
+}
+
+.app__page {
+  align-items: center;
+  background: white;
+  border-radius: var(--radius--500);
+  display: flex;
+  justify-content: center;
+  min-height: calc(100vh - var(--space-800));
+  padding: var(--space-800);
+  position: relative;
+}
+
+.app__center {
+  padding: var(--space-800);
+  position: relative;
+}
+
+.app__center:before,
+.app__center:after {
+  border: var(--divider-weight) solid var(--color-gray-100);
+  border-radius: var(--radius--500);
+  content: "";
+  display: block;
+  height: var(--space-800);
+  position: absolute;
+  width: var(--space-800);
+}
+
+.app__center:before {
+  border-right: 0;
+  border-bottom: 0;
+  left: 0;
+  top: 0;
+}
+
+.app__center:after {
+  border-left: 0;
+  border-top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.app__list--plain {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app__list--plain li {
+  margin: 0;
+  padding: 0;
+}
+
+.app__list--contact {
+  margin: calc(var(--space-500) * -1);
+}
+
+.app__list--contact li {
+  margin: var(--space-500);
+}
+
+.app__link--contact {
+  align-items: center;
+  color: var(--color-secondary-500);
+  display: flex;
+  position: relative;
+  white-space: nowrap;
+}
+
+.app__link--contact svg {
+  background: var(--color-secondary-500);
+  border-radius: var(--radius--500);
+  height: var(--space-800);
+  margin-right: var(--space-300);
+  width: var(--space-800);
+}
+
+.app__link--contact * {
+  z-index: 1;
+}
+
+.app__link--contact:hover * {
+  transform: translateY(-0.35em);
+}
+
+.app__link--contact:hover:before,
+.app__link--contact:hover:after {
+  opacity: 1;
+}
+
+.app__link--contact:before,
+.app__link--contact:after {
+  background: var(--color-gray-100);
+  border-radius: 50%;
+  bottom: -0.1em;
+  box-shadow: 0 0 10px 10px var(--color-gray-100);
+  content: "";
+  display: block;
+  height: 0.05em;
+  opacity: 0;
+  position: absolute;
+}
+
+.app__link--contact:before {
+  left: 0;
+  right: calc(100% - var(--space-800));
+  transform: scaleY(0.5) scaleX(0.75);
+}
+
+.app__link--contact:after {
+  left: var(--space-800);
+  right: 0;
+  transform: scaleY(0.25) scaleX(0.85);
+}
+
+.app__fullStop {
+  color: transparent;
+  position: relative;
+}
+
+.app__fullStop:before {
+  background: var(--color-gray-100);
+  border-radius: 50%;
+  bottom: 20%;
+  content: "";
+  display: block;
+  height: var(--space-300);
+  left: 0;
+  position: absolute;
+  width: var(--space-300);
+}
+
+.app__noWrap {
+  white-space: nowrap;
+}
