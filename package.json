@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build:production": "webpack -p",
+    "build:development": "NODE_ENV=development webpack"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
+    "favicons-webpack-plugin": "0.0.9",
     "handlebars": "^4.0.11",
     "handlebars-loader": "^1.7.0",
     "html-webpack-exclude-assets-plugin": "0.0.7",

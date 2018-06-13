@@ -3,11 +3,12 @@
 :root {
   --speed-500: 200ms;
 
-  --color-primary-500: #1cceba;
-  --color-secondary-500: #187176;
+  --color-primary-500: #0074e5;
+  --color-secondary-500: #255c8a;
   --color-tertiary-500: var(--color-primary-500);
-  --color-gray-100: #e6e6e6;
-  --color-gray-500: #4d4d4d;
+  --color-gray-100: #efefef;
+  --color-gray-200: #e6e6e6;
+  --color-gray-500: #757575;
   --color-white: #fff;
 
   --divider-weight: 0.5em;
@@ -101,7 +102,7 @@ svg {
 
 hr {
   border: 0;
-  border-top: var(--divider-weight) solid var(--color-gray-100);
+  border-top: var(--divider-weight) solid var(--color-gray-200);
   box-sizing: content-box;
   height: 0;
   margin: var(--space-800) 0;
@@ -127,7 +128,7 @@ hr {
 
 .app__center:before,
 .app__center:after {
-  border: var(--divider-weight) solid var(--color-gray-100);
+  border: var(--divider-weight) solid var(--color-gray-200);
   border-radius: var(--radius--500);
   content: "";
   display: block;
@@ -200,6 +201,14 @@ hr {
   opacity: 1;
 }
 
+.app__link--contact:hover:before {
+  transform: translate(var(--space-300)) scale(0.75, 0.5);
+}
+
+.app__link--contact:hover:after {
+  transform: translate(calc(var(--space-300) * -1)) scale(0.85, 0.25);
+}
+
 .app__link--contact:before,
 .app__link--contact:after {
   background: var(--color-gray-100);
@@ -216,13 +225,13 @@ hr {
 .app__link--contact:before {
   left: 0;
   right: calc(100% - var(--space-800));
-  transform: scaleY(0.5) scaleX(0.75);
+  transform: scale(1, 0.75);
 }
 
 .app__link--contact:after {
   left: var(--space-800);
   right: 0;
-  transform: scaleY(0.25) scaleX(0.85);
+  transform: scale(1.15, 0.5);
 }
 
 .app__fullStop {
@@ -231,7 +240,7 @@ hr {
 }
 
 .app__fullStop:before {
-  background: var(--color-gray-100);
+  background: var(--color-gray-200);
   border-radius: 50%;
   bottom: 20%;
   content: "";
