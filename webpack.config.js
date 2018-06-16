@@ -1,18 +1,62 @@
+const { promisify } = require("util");
+const fs = require("fs");
 const path = require("path");
+const chalk = require("chalk");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
+const { GenerateSW } = require("workbox-webpack-plugin");
 const PRODUCTION_ENV = "production";
 const DEVELOPMENT_ENV = "development";
 const { NODE_ENV = PRODUCTION_ENV } = process.env;
 const isProduction = NODE_ENV === PRODUCTION_ENV;
 const dirDist = path.resolve(__dirname, "dist");
 const dirSrc = path.resolve(__dirname, "src");
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
+const divider = chalk.black.bold("\n - - - - - - - - - - - - - - - -");
 
-console.log({ NODE_ENV, isProduction, dirDist, dirSrc });
+console.log(
+  divider,
+  `${chalk.green.bold("\n[node environment]")} ${NODE_ENV}`,
+  `${chalk.green.bold("\n[source directory]")} ${dirSrc}`,
+  `${chalk.green.bold("\n[dist directory]")} ${dirDist}`,
+  divider
+);
+
+const EnrichAppManifest = function() {};
+
+EnrichAppManifest.prototype.apply = compiler =>
+  compiler.plugin("done", () =>
+    setTimeout(async () => {
+      const dirManifest = `${dirDist}/manifest.json`;
+      const response = await readFile(dirManifest);
+      const manifestJson = {
+        ...JSON.parse(response.toString()),
+        short_name: "Devon",
+        name: "Devon Church",
+        theme_color: "#0074e5",
+        background_color: "#fff",
+        display: "fullscreen",
+        start_url: "/",
+        scope: "/"
+      };
+      const manifestString = JSON.stringify(manifestJson, null, 2);
+      await writeFile(dirManifest, manifestString);
+
+      console.log(
+        `${chalk.green.bold("\n[complete]")} enriched manifest`,
+        divider,
+        chalk.gray(manifestString),
+        divider
+      );
+
+      return;
+    }, 2000)
+  );
 
 const config = {
   mode: isProduction ? PRODUCTION_ENV : DEVELOPMENT_ENV,
@@ -23,7 +67,7 @@ const config = {
     path: dirDist
   },
 
-  // devtool: isProduction ? 'source-map' : 'cheap-source-map',
+  devtool: isProduction ? "source-map" : "cheap-source-map",
 
   // stats: isProduction ? 'normal' : 'errors-only',
 
@@ -44,7 +88,21 @@ const config = {
     const cleanMe = new CleanWebpackPlugin(dirDist);
     const excludeAssets = new HtmlWebpackExcludeAssetsPlugin();
     const extractCSS = new MiniCssExtractPlugin({ filename: "app.css" });
-    const favicon = new FaviconsWebpackPlugin(`${dirSrc}/favicon.png`);
+    const enrichManifest = new EnrichAppManifest();
+
+    const compression = new CompressionPlugin({
+      asset: "[path][query]",
+      exclude: /manifest.json/
+    });
+
+    const favicon = new FaviconsWebpackPlugin({
+      logo: `${dirSrc}/favicon.png`,
+      prefix: "/",
+      statsFilename: "iconstats.json",
+      persistentCache: true,
+      inject: true,
+      title: "Devon Church"
+    });
 
     const indexPage = new HtmlWebpackPlugin({
       template: "src/index.hbs",
@@ -59,8 +117,20 @@ const config = {
       excludeAssets: [/main.*.js/]
     });
 
-    const compression = new CompressionPlugin({
-      asset: "[path][query]"
+    const serviceWorker = new GenerateSW({
+      include: /\.(html|css|js|ico)$/,
+      runtimeCaching: [
+        {
+          urlPattern: /\.(png|jpg|jpeg|svg)$/,
+          handler: "cacheFirst",
+          options: {
+            cacheName: "images",
+            expiration: {
+              maxEntries: 10
+            }
+          }
+        }
+      ]
     });
 
     return isProduction
@@ -71,6 +141,8 @@ const config = {
           excludeAssets,
           extractCSS,
           favicon,
+          enrichManifest,
+          serviceWorker,
           compression
         ]
       : [indexPage, errorPage, excludeAssets, extractCSS];
