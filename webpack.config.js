@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 const PRODUCTION_ENV = "production";
 const DEVELOPMENT_ENV = "development";
 const { NODE_ENV = PRODUCTION_ENV } = process.env;
@@ -58,8 +59,20 @@ const config = {
       excludeAssets: [/main.*.js/]
     });
 
+    const compression = new CompressionPlugin({
+      asset: "[path][query]"
+    });
+
     return isProduction
-      ? [cleanMe, indexPage, errorPage, excludeAssets, extractCSS, favicon]
+      ? [
+          cleanMe,
+          indexPage,
+          errorPage,
+          excludeAssets,
+          extractCSS,
+          favicon,
+          compression
+        ]
       : [indexPage, errorPage, excludeAssets, extractCSS];
   })()
 };

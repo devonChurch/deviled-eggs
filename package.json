@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:production": "webpack -p",
-    "build:development": "NODE_ENV=development webpack"
+    "build:development": "NODE_ENV=development webpack",
+    "deploy": "aws s3 cp ./dist/ s3://devon.church/ --recursive --exclude '*.png' --acl 'public-read' --content-encoding 'gzip' && aws s3 cp ./dist/ s3://devon.church/ --recursive --exclude '*' --include '*.png' --acl 'public-read'"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/devonChurch/deviled-eggs#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
+    "compression-webpack-plugin": "^1.1.11",
     "css-loader": "^0.28.11",
     "favicons-webpack-plugin": "0.0.9",
     "handlebars": "^4.0.11",
