@@ -5,6 +5,8 @@ const chalk = require("chalk");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin")
+  .default;
 const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
@@ -38,6 +40,8 @@ EnrichAppManifest.prototype.apply = compiler =>
         ...JSON.parse(response.toString()),
         short_name: "Devon",
         name: "Devon Church",
+        description:
+          "A portal for Devon Church, a developer in New Zealand working at Xero",
         theme_color: "#0074e5",
         background_color: "#fff",
         display: "fullscreen",
@@ -80,6 +84,17 @@ const config = {
       {
         test: /\.hbs$/,
         loader: "handlebars-loader"
+      },
+      {
+        test: /\.ttf$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]"
+            }
+          }
+        ]
       }
     ]
   },
@@ -92,6 +107,7 @@ const config = {
 
     const compression = new CompressionPlugin({
       asset: "[path][query]",
+      // exclude: [/manifest.json/, /^precache/, /^service-worker/]
       exclude: /manifest.json/
     });
 
@@ -107,45 +123,72 @@ const config = {
     const indexPage = new HtmlWebpackPlugin({
       template: "src/index.hbs",
       minify: isProduction,
-      excludeAssets: [/main.*.js/]
+      excludeAssets: /main.*.js/,
+      inlineSource: /\.css$/
     });
 
     const errorPage = new HtmlWebpackPlugin({
       filename: "error/index.html",
       template: "src/error.hbs",
       minify: isProduction,
-      excludeAssets: [/main.*.js/]
+      excludeAssets: /main.*.js/,
+      inlineSource: /\.css$/
+    });
+
+    const _404Page = new HtmlWebpackPlugin({
+      filename: "404/index.html",
+      template: "src/404.hbs",
+      minify: isProduction,
+      excludeAssets: /main.*.js/,
+      inlineSource: /\.css$/
     });
 
     const serviceWorker = new GenerateSW({
-      include: /\.(html|css|js|ico)$/,
+      include: [/\.html$/, /^manifest/, /^favicon/],
+      clientsClaim: true,
+      skipWaiting: true,
       runtimeCaching: [
         {
-          urlPattern: /\.(png|jpg|jpeg|svg)$/,
+          urlPattern: /\.png$/,
           handler: "cacheFirst",
           options: {
             cacheName: "images",
             expiration: {
-              maxEntries: 10
+              maxEntries: 50,
+              maxAgeSeconds: 60 * 60 * 24
+            }
+          }
+        },
+        {
+          urlPattern: /\.ttf$/,
+          handler: "cacheFirst",
+          options: {
+            cacheName: "fonts",
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24
             }
           }
         }
       ]
     });
+    const inline = new HTMLInlineCSSWebpackPlugin();
 
     return isProduction
       ? [
           cleanMe,
           indexPage,
           errorPage,
+          _404Page,
           excludeAssets,
           extractCSS,
+          inline,
           favicon,
           enrichManifest,
           serviceWorker,
           compression
         ]
-      : [indexPage, errorPage, excludeAssets, extractCSS];
+      : [indexPage, errorPage, excludeAssets, extractCSS, inline];
   })()
 };
 

@@ -1,12 +1,12 @@
 {
   "name": "Devon Church",
   "short_name": "Devon",
-  "description": null,
+  "description": "A portal for Devon Church, a developer in New Zealand working at Xero",
   "dir": "auto",
   "lang": "en-US",
   "display": "fullscreen",
   "orientation": "any",
-  "start_url": "/index.html",
+  "start_url": "/",
   "background_color": "#fff",
   "icons": [
     {

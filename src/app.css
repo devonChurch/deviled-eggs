@@ -1,4 +1,16 @@
-@import url("https://fonts.googleapis.com/css?family=Titillium+Web:300,700");
+@font-face {
+  font-family: titillium-web;
+  font-weight: 300;
+  font-display: swap;
+  src: url("titillium-web-light.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: titillium-web;
+  font-weight: 700;
+  font-display: swap;
+  src: url("titillium-web-bold.ttf") format("opentype");
+}
 
 :root {
   --speed-500: 200ms;
@@ -63,7 +75,7 @@ html {
 body {
   background: var(--color-primary-500);
   color: var(--color-gray-500);
-  font-family: "Titillium Web", sans-serif;
+  font-family: titillium-web, sans-serif;
   font-size: var(--font-base);
   font-weight: var(--font-weight-thin);
   margin: 0;
