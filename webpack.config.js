@@ -107,7 +107,6 @@ const config = {
 
     const compression = new CompressionPlugin({
       asset: "[path][query]",
-      // exclude: [/manifest.json/, /^precache/, /^service-worker/]
       exclude: /manifest.json/
     });
 
@@ -128,7 +127,7 @@ const config = {
     });
 
     const errorPage = new HtmlWebpackPlugin({
-      filename: "error/index.html",
+      filename: "error.html",
       template: "src/error.hbs",
       minify: isProduction,
       excludeAssets: /main.*.js/,
@@ -136,8 +135,8 @@ const config = {
     });
 
     const _404Page = new HtmlWebpackPlugin({
-      filename: "404/index.html",
-      template: "src/404.hbs",
+      filename: "404.html",
+      template: "src/error.hbs",
       minify: isProduction,
       excludeAssets: /main.*.js/,
       inlineSource: /\.css$/
