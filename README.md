@@ -2,7 +2,7 @@
 
 ![devon.church screen shot](https://user-images.githubusercontent.com/15273233/50820345-3a407800-1391-11e9-9d8b-8e69912b9701.png)
 
-A personal portal for myself that simply links to the main third party platforms that I subscribe to.
+A personal portal ([devon.church](https://www.devon.church)) for myself that simply links to the main third party platforms that I subscribe to.
 
 - [**CodePen**](https://codepen.io/DevonChurch/)
 - [**GitHub**](https://github.com/devonChurch/)
