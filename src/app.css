@@ -164,8 +164,8 @@ hr {
 }
 
 .app__list--plain {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  justify-items: start;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -177,6 +177,7 @@ hr {
 }
 
 .app__list--contact {
+  grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
   margin: calc(var(--space-500) * -1);
 }
 
@@ -187,7 +188,7 @@ hr {
 .app__link--contact {
   align-items: center;
   color: var(--color-secondary-500);
-  display: flex;
+  display: inline-flex;
   position: relative;
   white-space: nowrap;
 }
@@ -195,6 +196,7 @@ hr {
 .app__link--contact svg {
   background: var(--color-secondary-500);
   border-radius: var(--radius--500);
+  flex-shrink: 0;
   height: var(--space-800);
   margin-right: var(--space-300);
   width: var(--space-800);
@@ -206,6 +208,10 @@ hr {
 
 .app__link--contact:hover * {
   transform: translateY(-0.35em);
+}
+
+.app__link--contact:hover svg use {
+  transform: translateY(-0.2em);
 }
 
 .app__link--contact:hover:before,
