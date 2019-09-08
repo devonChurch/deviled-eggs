@@ -1,6 +1,12 @@
 # Deviled Eggs
 
-![devon.church screen shot](https://user-images.githubusercontent.com/15273233/50820345-3a407800-1391-11e9-9d8b-8e69912b9701.png)
+## Light Mode
+
+![light mode screen shot](https://user-images.githubusercontent.com/15273233/64484253-a26a9500-d263-11e9-9bcc-86984f36658e.png)
+
+## Dark Mode
+
+![dark mode screen shot](https://user-images.githubusercontent.com/15273233/64484254-a4ccef00-d263-11e9-826b-8a0cd84d53f1.png)
 
 A personal portal ([devon.church](https://www.devon.church)) for myself that simply links to the main third party platforms that I subscribe to.
 

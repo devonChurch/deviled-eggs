@@ -127,7 +127,7 @@ const config = {
     });
 
     const errorPage = new HtmlWebpackPlugin({
-      filename: "error.html",
+      filename: "error/index.html",
       template: "src/error.hbs",
       minify: isProduction,
       excludeAssets: /main.*.js/,
@@ -135,7 +135,7 @@ const config = {
     });
 
     const _404Page = new HtmlWebpackPlugin({
-      filename: "404.html",
+      filename: "404/index.html",
       template: "src/error.hbs",
       minify: isProduction,
       excludeAssets: /main.*.js/,
