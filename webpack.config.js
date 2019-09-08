@@ -41,7 +41,7 @@ EnrichAppManifest.prototype.apply = compiler =>
         short_name: "Devon",
         name: "Devon Church",
         description:
-          "A portal for Devon Church, a developer in New Zealand working at Xero",
+          "A portal for Devon Church, a Software Engineer living in New Zealand",
         theme_color: "#0074e5",
         background_color: "#fff",
         display: "fullscreen",
